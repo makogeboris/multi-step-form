@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
   --blue-200: hsl(206, 94%, 87%);
   --blue-100: hsl(218, 100%, 97%);
   --blue-50: hsl(231, 100%, 99%);
+  --shadow: 0px 25px 40px -20px rgba(0, 0, 0, 0.0951141);
 
   /* TYPOGRAPHY */
 
@@ -117,6 +118,13 @@ body {
   line-height: 1.5;
   font-family: "Ubuntu", sans-serif;
   background: var(--blue-100);
+    position: relative;
+
+
+    @media (min-width: 48rem) {
+      display: grid;
+      place-content: center;
+    }
 }
 
 /* Remove default margins */

@@ -1,22 +1,25 @@
 import styled from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles";
-import Form from "./components/Form";
+import MainContent from "./components/MainContent";
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Main = styled.main`
+  @media (min-width: 48rem) {
+    padding-inline: var(--space-xl);
+    padding-block: var(--space-2xl);
+  }
 `;
+
+const Container = styled.div``;
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <main>
+      <Main>
         <Container>
-          <Form />
+          <MainContent />
         </Container>
-      </main>
+      </Main>
     </>
   );
 }
