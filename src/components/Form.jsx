@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "./Button";
 
 const Wrapper = styled.div`
   padding-inline: var(--space-sm);
@@ -139,117 +138,59 @@ const Input = styled.input`
   }
 `;
 
-const BtnsWrapDesktop = styled.div`
-  display: none;
-
-  @media (min-width: 48rem) {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    /* justify-content: flex-end; */
-    margin-block-start: var(--space-sm);
-  }
-`;
-
-const WrapDesk = styled.div`
-  justify-self: flex-end;
-`;
-
-const BtnWrap = styled.div`
-  width: 33.75rem;
-  display: flex;
-  justify-content: space-between;
-  /* justify-content: flex-end; */
-  margin: 0 auto;
-`;
-
-const BtnsWrapMobile = styled.div`
-  display: flex;
-  justify-content: space-between;
-  /* justify-content: flex-end; */
-  background: var(--white);
-  margin-block-start: 8.4375rem;
-  padding: var(--space-sm);
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-
-  @media (min-width: 48rem) {
-    display: none;
-  }
-`;
-
 function Form() {
   return (
-    <>
-      <Wrapper>
-        <StyledForm>
-          <FormHeader>
-            <Heading>Personal info</Heading>
-            <Description>
-              Please provide your name, email address, and phone number.
-            </Description>
-          </FormHeader>
+    <Wrapper>
+      <StyledForm>
+        <FormHeader>
+          <Heading>Personal info</Heading>
+          <Description>
+            Please provide your name, email address, and phone number.
+          </Description>
+        </FormHeader>
 
-          <FormFields>
-            <FieldsContainer>
-              <LabelErrWrap>
-                <Label htmlFor="name">Name</Label>
-                <ErrorMessage>This field is required</ErrorMessage>
-              </LabelErrWrap>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="e.g. Stephen King"
-              />
-            </FieldsContainer>
+        <FormFields>
+          <FieldsContainer>
+            <LabelErrWrap>
+              <Label htmlFor="name">Name</Label>
+              <ErrorMessage>This field is required</ErrorMessage>
+            </LabelErrWrap>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="e.g. Stephen King"
+            />
+          </FieldsContainer>
 
-            <FieldsContainer>
-              <LabelErrWrap>
-                <Label htmlFor="email">Email Address</Label>
-                <ErrorMessage>This field is required</ErrorMessage>
-              </LabelErrWrap>
-              <Input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="e.g. stephenking@lorem.com"
-              />
-            </FieldsContainer>
+          <FieldsContainer>
+            <LabelErrWrap>
+              <Label htmlFor="email">Email Address</Label>
+              <ErrorMessage>This field is required</ErrorMessage>
+            </LabelErrWrap>
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="e.g. stephenking@lorem.com"
+            />
+          </FieldsContainer>
 
-            <FieldsContainer>
-              <LabelErrWrap>
-                <Label htmlFor="number">Phone Number</Label>
-                <ErrorMessage>This field is required</ErrorMessage>
-              </LabelErrWrap>
-              <Input
-                type="number"
-                name="number"
-                id="number"
-                placeholder="e.g. +1 234 567 890"
-              />
-            </FieldsContainer>
-          </FormFields>
-
-          <BtnsWrapDesktop>
-            <Button variation="secondary">Go Back</Button>
-
-            <WrapDesk>
-              <Button variation="primary">Next Step</Button>
-            </WrapDesk>
-          </BtnsWrapDesktop>
-        </StyledForm>
-      </Wrapper>
-
-      <BtnsWrapMobile>
-        <BtnWrap>
-          <Button variation="secondary">Go Back</Button>
-
-          <Button variation="primary">Next Step</Button>
-        </BtnWrap>
-      </BtnsWrapMobile>
-    </>
+          <FieldsContainer>
+            <LabelErrWrap>
+              <Label htmlFor="number">Phone Number</Label>
+              <ErrorMessage>This field is required</ErrorMessage>
+            </LabelErrWrap>
+            <Input
+              type="number"
+              name="number"
+              id="number"
+              placeholder="e.g. +1 234 567 890"
+            />
+          </FieldsContainer>
+        </FormFields>
+      </StyledForm>
+    </Wrapper>
   );
 }
 
