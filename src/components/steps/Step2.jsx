@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import arcade from "../images/icon-arcade.svg";
-import advanced from "../images/icon-advanced.svg";
-import pro from "../images/icon-pro.svg";
+import arcade from "../../images/icon-arcade.svg";
+import advanced from "../../images/icon-advanced.svg";
+import pro from "../../images/icon-pro.svg";
+import Button from "../Button";
 
 const Wrapper = styled.div`
   padding-inline: var(--space-sm);
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledPlans = styled.form`
+const StyledPlans = styled.div`
   display: flex;
   flex-direction: column;
   padding: var(--space-lg) var(--space-md);
@@ -24,6 +25,7 @@ const StyledPlans = styled.form`
   margin: 0 auto;
   margin-top: -76px;
   margin-block-end: 12.875rem;
+  align-items: center;
 
   @media (min-width: 48rem) {
     margin: 0;
@@ -42,7 +44,9 @@ const StyledPlans = styled.form`
 const FormHeader = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: left;
   gap: var(--space-xs);
+  width: 100%;
 `;
 
 const Heading = styled.h1`
@@ -70,6 +74,7 @@ const PlanOptionsContainer = styled.fieldset`
   border: none;
   padding: 0;
   margin: 0;
+  width: 100%;
 
   @media (min-width: 67.5rem) {
     flex-direction: row;
@@ -103,6 +108,7 @@ const PlanOption = styled.label`
   @media (min-width: 67.5rem) {
     padding-block: 1.125rem;
     min-width: 8.625rem;
+    min-height: 186px;
   }
 `;
 
@@ -168,6 +174,7 @@ const BillingCycle = styled.fieldset`
   border-radius: 8px;
   background: var(--blue-50);
   padding: 0.875rem;
+  width: 100%;
 
   @media (min-width: 67.5rem) {
     margin-block: var(--space-lg) var(--space-xl);
@@ -259,12 +266,51 @@ const HiddenRadio = styled.input`
   box-shadow: none;
 `;
 
+const BtnsWrapDesktop = styled.div`
+  display: none;
+
+  @media (min-width: 48rem) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: var(--space-xl);
+  }
+`;
+
+const WrapDesk = styled.div`
+  justify-self: flex-end;
+`;
+
+const BtnWrap = styled.div`
+  width: 33.75rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+`;
+
+const BtnsWrapMobile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: var(--white);
+  margin-block-start: 8.4375rem;
+  padding: var(--space-sm);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+`;
+
 function Plans({
   billing,
   setBilling,
   showDiscount,
   setShowDiscount,
   handleBillingChange,
+  nextStep,
+  prevStep,
 }) {
   return (
     <Wrapper>
@@ -369,6 +415,30 @@ function Plans({
             </SwitcherLabel>
           </SwitcherBox>
         </BillingCycle>
+
+        <BtnsWrapDesktop>
+          <Button onClick={prevStep} $variation="secondary">
+            Go Back
+          </Button>
+
+          <WrapDesk>
+            <Button onClick={nextStep} $variation="primary">
+              Next Step
+            </Button>
+          </WrapDesk>
+        </BtnsWrapDesktop>
+
+        <BtnsWrapMobile>
+          <BtnWrap>
+            <Button onClick={prevStep} $variation="secondary">
+              Go Back
+            </Button>
+
+            <Button onClick={nextStep} $variation="primary">
+              Next Step
+            </Button>
+          </BtnWrap>
+        </BtnsWrapMobile>
       </StyledPlans>
     </Wrapper>
   );

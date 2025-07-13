@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../Button";
 
 const Wrapper = styled.div`
   padding-inline: var(--space-sm);
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledFinishingUp = styled.form`
+const StyledFinishingUp = styled.div`
   display: flex;
   flex-direction: column;
   padding: var(--space-lg) var(--space-md);
@@ -20,6 +21,7 @@ const StyledFinishingUp = styled.form`
   margin: 0 auto;
   margin-top: -76px;
   margin-block-end: 12.875rem;
+  align-items: center;
 
   @media (min-width: 48rem) {
     margin: 0;
@@ -33,7 +35,9 @@ const StyledFinishingUp = styled.form`
 const FormHeader = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: left;
   gap: var(--space-xs);
+  width: 100%;
 `;
 
 const Heading = styled.h1`
@@ -61,12 +65,14 @@ const FinishWrap = styled.div`
   border-radius: 8px;
   padding-inline: var(--space-sm);
   padding-block: 0.875rem;
-  background: var(--blue-50);
   margin-block-start: var(--space-md);
+  background: var(--blue-50);
+  width: 100%;
 
   @media (min-width: 48rem) {
     padding-inline: var(--space-md);
     padding-block: 1.3125rem;
+    margin-block-start: var(--space-xl);
   }
 `;
 
@@ -103,9 +109,10 @@ const TotalWrap = styled.div`
   justify-content: space-between;
   padding-inline: var(--space-md);
   margin-block-start: var(--space-md);
+  width: 100%;
 
   @media (min-width: 48rem) {
-    margin-block: var(--space-lg) var(--space-2xl);
+    margin-block-start: var(--space-lg);
   }
 `;
 
@@ -162,7 +169,44 @@ const Hr = styled.hr`
   opacity: 0.2;
 `;
 
-function FinishingUp({ billing }) {
+const BtnsWrapDesktop = styled.div`
+  display: none;
+
+  @media (min-width: 48rem) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: 125px;
+  }
+`;
+
+const WrapDesk = styled.div`
+  justify-self: flex-end;
+`;
+
+const BtnWrap = styled.div`
+  width: 33.75rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+`;
+
+const BtnsWrapMobile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: var(--white);
+  margin-block-start: 8.4375rem;
+  padding: var(--space-sm);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+`;
+
+function FinishingUp({ billing, nextStep, prevStep, handlePlanChange }) {
   return (
     <Wrapper>
       <StyledFinishingUp>
@@ -176,8 +220,10 @@ function FinishingUp({ billing }) {
         <FinishWrap>
           <Item>
             <PlanWrap>
-              <Plan>Arcade (Yearly)</Plan>
-              <ChangeBtn>Change</ChangeBtn>
+              <Plan>
+                Arcade ({billing === "monthly" ? "Monthly" : "Yearly"})
+              </Plan>
+              <ChangeBtn onClick={handlePlanChange}>Change</ChangeBtn>
             </PlanWrap>
 
             <PlanTotal>{billing === "monthly" ? "$9/mo" : "$90/yr"}</PlanTotal>
@@ -208,6 +254,30 @@ function FinishingUp({ billing }) {
             {billing === "monthly" ? "+$12/mo" : "+$120/yr"}
           </TotalAmount>
         </TotalWrap>
+
+        <BtnsWrapDesktop>
+          <Button onClick={prevStep} $variation="secondary">
+            Go Back
+          </Button>
+
+          <WrapDesk>
+            <Button onClick={nextStep} $variation="confirm">
+              Confirm
+            </Button>
+          </WrapDesk>
+        </BtnsWrapDesktop>
+
+        <BtnsWrapMobile>
+          <BtnWrap>
+            <Button onClick={prevStep} $variation="secondary">
+              Go Back
+            </Button>
+
+            <Button onClick={nextStep} $variation="confirm">
+              Confirm
+            </Button>
+          </BtnWrap>
+        </BtnsWrapMobile>
       </StyledFinishingUp>
     </Wrapper>
   );

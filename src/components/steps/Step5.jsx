@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import icon from "../images/icon-thank-you.svg";
+import icon from "../../images/icon-thank-you.svg";
 
 const Wrapper = styled.div`
   padding-inline: var(--space-sm);
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledFinishingUp = styled.div`
+const StyledThankYou = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +29,7 @@ const StyledFinishingUp = styled.div`
   @media (min-width: 48rem) {
     margin: 0;
     padding: 0;
-    padding-block-start: var(--space-lg);
+    padding-block-start: 8.75rem;
     box-shadow: none;
     max-width: 28.125rem;
     gap: var(--space-lg);
@@ -75,7 +75,7 @@ const Description = styled.p`
 function ThankYou() {
   return (
     <Wrapper>
-      <StyledFinishingUp>
+      <StyledThankYou>
         <Img src={icon} alt="" />
 
         <MessageContainer>
@@ -86,7 +86,7 @@ function ThankYou() {
             at support@loremgaming.com.
           </Description>
         </MessageContainer>
-      </StyledFinishingUp>
+      </StyledThankYou>
     </Wrapper>
   );
 }

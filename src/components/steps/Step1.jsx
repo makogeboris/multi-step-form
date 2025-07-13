@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../Button";
 
 const Wrapper = styled.div`
   padding-inline: var(--space-sm);
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledForm = styled.form`
+const StyledPersonalInfo = styled.div`
   display: flex;
   flex-direction: column;
   padding: var(--space-lg) var(--space-md);
@@ -21,6 +22,7 @@ const StyledForm = styled.form`
   margin: 0 auto;
   margin-top: -76px;
   margin-block-end: 12.875rem;
+  align-items: center;
 
   @media (min-width: 48rem) {
     margin: 0;
@@ -64,6 +66,7 @@ const FormFields = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  width: 100%;
 
   @media (min-width: 48rem) {
     gap: var(--space-md);
@@ -138,10 +141,47 @@ const Input = styled.input`
   }
 `;
 
-function Form() {
+const BtnsWrapDesktop = styled.div`
+  display: none;
+
+  @media (min-width: 48rem) {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-block-start: var(--space-xl);
+  }
+`;
+
+const WrapDesk = styled.div`
+  justify-self: flex-end;
+`;
+
+const BtnWrap = styled.div`
+  width: 33.75rem;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+`;
+
+const BtnsWrapMobile = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  background: var(--white);
+  margin-block-start: 8.4375rem;
+  padding: var(--space-sm);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+`;
+
+function PersonalInfo({ nextStep }) {
   return (
     <Wrapper>
-      <StyledForm>
+      <StyledPersonalInfo>
         <FormHeader>
           <Heading>Personal info</Heading>
           <Description>
@@ -153,7 +193,7 @@ function Form() {
           <FieldsContainer>
             <LabelErrWrap>
               <Label htmlFor="name">Name</Label>
-              <ErrorMessage>This field is required</ErrorMessage>
+              {/* <ErrorMessage>This field is required</ErrorMessage> */}
             </LabelErrWrap>
             <Input
               type="text"
@@ -166,7 +206,7 @@ function Form() {
           <FieldsContainer>
             <LabelErrWrap>
               <Label htmlFor="email">Email Address</Label>
-              <ErrorMessage>This field is required</ErrorMessage>
+              {/* <ErrorMessage>This field is required</ErrorMessage> */}
             </LabelErrWrap>
             <Input
               type="email"
@@ -179,7 +219,7 @@ function Form() {
           <FieldsContainer>
             <LabelErrWrap>
               <Label htmlFor="number">Phone Number</Label>
-              <ErrorMessage>This field is required</ErrorMessage>
+              {/* <ErrorMessage>This field is required</ErrorMessage> */}
             </LabelErrWrap>
             <Input
               type="number"
@@ -189,9 +229,25 @@ function Form() {
             />
           </FieldsContainer>
         </FormFields>
-      </StyledForm>
+
+        <BtnsWrapDesktop>
+          <WrapDesk>
+            <Button onClick={nextStep} $variation="primary">
+              Next Step
+            </Button>
+          </WrapDesk>
+        </BtnsWrapDesktop>
+
+        <BtnsWrapMobile>
+          <BtnWrap>
+            <Button onClick={nextStep} $variation="primary">
+              Next Step
+            </Button>
+          </BtnWrap>
+        </BtnsWrapMobile>
+      </StyledPersonalInfo>
     </Wrapper>
   );
 }
 
-export default Form;
+export default PersonalInfo;

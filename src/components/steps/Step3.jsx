@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../Button";
 
 const Wrapper = styled.div`
   padding-inline: var(--space-sm);
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledAddOns = styled.form`
+const StyledAddOns = styled.div`
   display: flex;
   flex-direction: column;
   padding: var(--space-lg) var(--space-md);
@@ -21,6 +22,7 @@ const StyledAddOns = styled.form`
   margin: 0 auto;
   margin-top: -76px;
   margin-block-end: 12.875rem;
+  align-items: center;
 
   @media (min-width: 48rem) {
     margin: 0;
@@ -40,6 +42,8 @@ const FormHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+  text-align: left;
+  width: 100%;
 `;
 
 const Heading = styled.h1`
@@ -64,13 +68,10 @@ const AddOnsWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+  width: 100%;
 
   @media (min-width: 26.875rem) {
     gap: var(--space-sm);
-  }
-
-  @media (min-width: 48rem) {
-    margin-block-end: var(--space-sm);
   }
 `;
 
@@ -156,7 +157,44 @@ const LabelPrice = styled.p`
   color: var(--purple-600);
 `;
 
-function AddOns({ billing }) {
+const BtnsWrapDesktop = styled.div`
+  display: none;
+
+  @media (min-width: 48rem) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: var(--space-lg);
+  }
+`;
+
+const WrapDesk = styled.div`
+  justify-self: flex-end;
+`;
+
+const BtnWrap = styled.div`
+  width: 33.75rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+`;
+
+const BtnsWrapMobile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: var(--white);
+  margin-block-start: 8.4375rem;
+  padding: var(--space-sm);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
+  @media (min-width: 48rem) {
+    display: none;
+  }
+`;
+
+function AddOns({ billing, nextStep, prevStep }) {
   return (
     <Wrapper>
       <StyledAddOns>
@@ -210,6 +248,30 @@ function AddOns({ billing }) {
             </LabelPrice>
           </AddOn>
         </AddOnsWrap>
+
+        <BtnsWrapDesktop>
+          <Button onClick={prevStep} $variation="secondary">
+            Go Back
+          </Button>
+
+          <WrapDesk>
+            <Button onClick={nextStep} $variation="primary">
+              Next Step
+            </Button>
+          </WrapDesk>
+        </BtnsWrapDesktop>
+
+        <BtnsWrapMobile>
+          <BtnWrap>
+            <Button onClick={prevStep} $variation="secondary">
+              Go Back
+            </Button>
+
+            <Button onClick={nextStep} $variation="primary">
+              Next Step
+            </Button>
+          </BtnWrap>
+        </BtnsWrapMobile>
       </StyledAddOns>
     </Wrapper>
   );

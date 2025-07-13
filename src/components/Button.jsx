@@ -28,6 +28,20 @@ const variations = {
       outline-offset: -2px;
     }
   `,
+
+  confirm: css`
+    background: var(--purple-600);
+    color: var(--white);
+
+    &:hover {
+      background: var(--blue-700);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--blue-950);
+      outline-offset: 1px;
+    }
+  `,
 };
 
 const Button = styled.button`
@@ -49,11 +63,11 @@ const Button = styled.button`
     line-height: 120%;
   }
 
-  ${(props) => variations[props.variation]}
+  ${(props) => variations[props.$variation]}
 `;
 
 Button.defaultProps = {
-  variation: "primary",
+  $variation: "primary",
 };
 
 export default Button;

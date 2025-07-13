@@ -1,12 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
 import StepContainer from "./StepContainer";
-import Form from "./Form";
-import Plans from "./Plans";
-import AddOns from "./AddOns";
-import FinishingUp from "./FinishingUp";
-import ThankYou from "./ThankYou";
-import Button from "./Button";
-import { useState } from "react";
+import PersonalInfo from "../components/steps/Step1";
+import Plans from "../components/steps/Step2";
+import AddOns from "../components/steps/Step3";
+import FinishingUp from "../components/steps/Step4";
+import ThankYou from "../components/steps/Step5";
 
 const StyledMainContent = styled.div`
   width: 100%;
@@ -26,49 +25,23 @@ const StyledMainContent = styled.div`
   }
 `;
 
-const BtnsWrapDesktop = styled.div`
-  display: none;
-
-  @media (min-width: 48rem) {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    /* justify-content: flex-end; */
-    margin-block-start: var(--space-2xl);
-  }
-`;
-
-const WrapDesk = styled.div`
-  justify-self: flex-end;
-`;
-
-const BtnWrap = styled.div`
-  width: 33.75rem;
-  display: flex;
-  justify-content: space-between;
-  /* justify-content: flex-end; */
-  margin: 0 auto;
-`;
-
-const BtnsWrapMobile = styled.div`
-  display: flex;
-  justify-content: space-between;
-  /* justify-content: flex-end; */
-  background: var(--white);
-  margin-block-start: 8.4375rem;
-  padding: var(--space-sm);
+const Form = styled.form`
   width: 100%;
-  position: absolute;
-  bottom: 0;
 
-  @media (min-width: 48rem) {
-    display: none;
+  @media (min-width: 67.5rem) {
+    min-width: 28.125rem;
   }
 `;
 
 function MainContent() {
+  const [step, setStep] = useState(1);
   const [billing, setBilling] = useState("monthly");
   const [showDiscount, setShowDiscount] = useState(false);
+
+  const nextStep = () => setStep((prev) => prev + 1);
+  const prevStep = () => setStep((prev) => prev - 1);
+
+  const handlePlanChange = () => setStep((prev) => prev - 2);
 
   const handleBillingChange = (event) => {
     setBilling(event.target.value);
@@ -77,37 +50,34 @@ function MainContent() {
 
   return (
     <StyledMainContent>
-      <StepContainer />
+      <StepContainer step={step} />
 
-      <div>
-        {/* <Form /> */}
-        <Plans
-          billing={billing}
-          setBilling={setBilling}
-          showDiscount={showDiscount}
-          setShowDiscount={setShowDiscount}
-          handleBillingChange={handleBillingChange}
-        />
-        {/* <AddOns billing={billing} /> */}
-        {/* <FinishingUp billing={billing} /> */}
-        {/* <ThankYou /> */}
-
-        <BtnsWrapDesktop>
-          <Button variation="secondary">Go Back</Button>
-
-          <WrapDesk>
-            <Button variation="primary">Next Step</Button>
-          </WrapDesk>
-        </BtnsWrapDesktop>
-      </div>
-
-      <BtnsWrapMobile>
-        <BtnWrap>
-          <Button variation="secondary">Go Back</Button>
-
-          <Button variation="primary">Next Step</Button>
-        </BtnWrap>
-      </BtnsWrapMobile>
+      <Form>
+        {step === 1 && <PersonalInfo nextStep={nextStep} />}
+        {step === 2 && (
+          <Plans
+            nextStep={nextStep}
+            prevStep={prevStep}
+            billing={billing}
+            setBilling={setBilling}
+            showDiscount={showDiscount}
+            setShowDiscount={setShowDiscount}
+            handleBillingChange={handleBillingChange}
+          />
+        )}
+        {step === 3 && (
+          <AddOns nextStep={nextStep} prevStep={prevStep} billing={billing} />
+        )}
+        {step === 4 && (
+          <FinishingUp
+            nextStep={nextStep}
+            prevStep={prevStep}
+            handlePlanChange={handlePlanChange}
+            billing={billing}
+          />
+        )}
+        {step === 5 && <ThankYou />}
+      </Form>
     </StyledMainContent>
   );
 }

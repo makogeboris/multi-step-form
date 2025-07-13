@@ -35,11 +35,10 @@ const StepItem = styled.div`
 const StepNumberContainer = styled.div`
   width: 2.0625rem;
   height: 2.0625rem;
-  /* border: 1px solid var(--white); */
-  border: 1px solid transparent;
+  border: ${({ $active }) =>
+    $active ? "1px solid transparent" : "1px solid var(--white)"};
   border-radius: 16.5px;
-  /* background: transparent; */
-  background: var(--blue-200);
+  background: ${({ $active }) => ($active ? "var(--blue-200)" : "transparent")};
   display: grid;
   place-items: center;
 `;
@@ -76,16 +75,15 @@ const StepNumber = styled.p`
   font-size: var(--fs-sm);
   line-height: var(--lh-tight);
   letter-spacing: 1px;
-  /* color: var(--white); */
-  color: var(--blue-950);
+  color: ${({ $active }) => ($active ? "var(--blue-950)" : "var(--white)")};
 `;
 
-function StepContainer() {
+function StepContainer({ step }) {
   return (
     <StyledStepContainer>
       <StepItem>
-        <StepNumberContainer>
-          <StepNumber>1</StepNumber>
+        <StepNumberContainer $active={step === 1}>
+          <StepNumber $active={step === 1}>1</StepNumber>
         </StepNumberContainer>
 
         <StepTextContainer>
@@ -95,8 +93,8 @@ function StepContainer() {
       </StepItem>
 
       <StepItem>
-        <StepNumberContainer>
-          <StepNumber>2</StepNumber>
+        <StepNumberContainer $active={step === 2}>
+          <StepNumber $active={step === 2}>2</StepNumber>
         </StepNumberContainer>
 
         <StepTextContainer>
@@ -106,8 +104,8 @@ function StepContainer() {
       </StepItem>
 
       <StepItem>
-        <StepNumberContainer>
-          <StepNumber>3</StepNumber>
+        <StepNumberContainer $active={step === 3}>
+          <StepNumber $active={step === 3}>3</StepNumber>
         </StepNumberContainer>
 
         <StepTextContainer>
@@ -117,8 +115,8 @@ function StepContainer() {
       </StepItem>
 
       <StepItem>
-        <StepNumberContainer>
-          <StepNumber>4</StepNumber>
+        <StepNumberContainer $active={step === 4}>
+          <StepNumber $active={step === 4}>4</StepNumber>
         </StepNumberContainer>
 
         <StepTextContainer>
