@@ -112,8 +112,8 @@ const Label = styled.label`
 const Input = styled.input`
   padding: var(--space-xs) var(--space-sm);
   background: var(--white);
-  border: 1px solid var(--purple-200);
-  /* border: 1px solid var(--red-500); */
+  border: 1px solid
+    ${({ hasError }) => (hasError ? "var(--red-500)" : "var(--purple-200)")};
   border-radius: 4px;
   font-weight: var(--fw-medium);
   font-size: var(--fs-sm);
@@ -123,11 +123,13 @@ const Input = styled.input`
   transition: all ease 0.3s;
 
   &:hover:not(:focus-visible) {
-    border: 1px solid var(--purple-600);
+    border: 1px solid
+      ${({ hasError }) => (hasError ? "var(--red-500)" : "var(--purple-600)")};
   }
 
   &:focus-visible {
-    outline: 2px solid var(--blue-950);
+    outline: 1px solid
+      ${({ hasError }) => (hasError ? "var(--red-500)" : "var(--blue-950)")};
   }
 
   &::placeholder {
@@ -214,6 +216,7 @@ function PersonalInfo({ nextStep }) {
               id="name"
               placeholder="e.g. Stephen King"
               {...register("name")}
+              hasError={!!errors.name}
             />
           </FieldsContainer>
 
@@ -229,6 +232,7 @@ function PersonalInfo({ nextStep }) {
               id="email"
               placeholder="e.g. stephenking@lorem.com"
               {...register("email")}
+              hasError={!!errors.email}
             />
           </FieldsContainer>
 
@@ -244,6 +248,7 @@ function PersonalInfo({ nextStep }) {
               id="number"
               placeholder="e.g. +1 234 567 890"
               {...register("number")}
+              hasError={!!errors.number}
             />
           </FieldsContainer>
         </FormFields>
