@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DevTool } from "@hookform/devtools";
 import * as yup from "yup";
 import StepContainer from "./StepContainer";
 import PersonalInfo from "../components/steps/Step1";
@@ -113,7 +112,6 @@ function MainContent() {
           {step === 5 && <ThankYou />}
         </Form>
       </FormProvider>
-      <DevTool control={methods.control} />
     </StyledMainContent>
   );
 }
