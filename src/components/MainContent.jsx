@@ -1,5 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DevTool } from "@hookform/devtools";
+import * as yup from "yup";
 import StepContainer from "./StepContainer";
 import PersonalInfo from "../components/steps/Step1";
 import Plans from "../components/steps/Step2";
@@ -33,7 +37,37 @@ const Form = styled.form`
   }
 `;
 
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Name is required")
+    .min(3, "Name must be at least 3 characters"),
+
+  email: yup.string().email("Invalid email").required("Email is required"),
+
+  number: yup
+    .string()
+    .required("Phone number is required")
+    .test(
+      "len",
+      "Must have at least 10 digits",
+      (value) => value && value.replace(/\D/g, "").length >= 10
+    ),
+});
+
 function MainContent() {
+  const methods = useForm({
+    resolver: yupResolver(schema),
+    mode: "onTouched",
+    defaultValues: {
+      name: "",
+      email: "",
+      number: "",
+      plan: "arcade",
+      duration: "monthly",
+    },
+  });
+
   const [step, setStep] = useState(1);
   const [billing, setBilling] = useState("monthly");
   const [showDiscount, setShowDiscount] = useState(false);
@@ -51,33 +85,35 @@ function MainContent() {
   return (
     <StyledMainContent>
       <StepContainer step={step} />
-
-      <Form>
-        {step === 1 && <PersonalInfo nextStep={nextStep} />}
-        {step === 2 && (
-          <Plans
-            nextStep={nextStep}
-            prevStep={prevStep}
-            billing={billing}
-            setBilling={setBilling}
-            showDiscount={showDiscount}
-            setShowDiscount={setShowDiscount}
-            handleBillingChange={handleBillingChange}
-          />
-        )}
-        {step === 3 && (
-          <AddOns nextStep={nextStep} prevStep={prevStep} billing={billing} />
-        )}
-        {step === 4 && (
-          <FinishingUp
-            nextStep={nextStep}
-            prevStep={prevStep}
-            handlePlanChange={handlePlanChange}
-            billing={billing}
-          />
-        )}
-        {step === 5 && <ThankYou />}
-      </Form>
+      <FormProvider {...methods}>
+        <Form onSubmit={methods.handleSubmit(() => nextStep())}>
+          {step === 1 && <PersonalInfo nextStep={nextStep} />}
+          {step === 2 && (
+            <Plans
+              nextStep={nextStep}
+              prevStep={prevStep}
+              billing={billing}
+              setBilling={setBilling}
+              showDiscount={showDiscount}
+              setShowDiscount={setShowDiscount}
+              handleBillingChange={handleBillingChange}
+            />
+          )}
+          {step === 3 && (
+            <AddOns nextStep={nextStep} prevStep={prevStep} billing={billing} />
+          )}
+          {step === 4 && (
+            <FinishingUp
+              nextStep={nextStep}
+              prevStep={prevStep}
+              handlePlanChange={handlePlanChange}
+              billing={billing}
+            />
+          )}
+          {step === 5 && <ThankYou />}
+        </Form>
+      </FormProvider>
+      <DevTool control={methods.control} />
     </StyledMainContent>
   );
 }

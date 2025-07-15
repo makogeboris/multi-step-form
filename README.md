@@ -34,18 +34,16 @@ Users should be able to:
 
 ### Links
 
-- [Live Site]()
+- [Live Site](https://multi-step-form-three-eta.vercel.app/)
 
 ### Built with
 
 - [React](https://reactjs.org/)
 - [Styled Components](https://styled-components.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Yup](https://github.com/jquense/yup)
 
 ### What I learned
-
-### Continued development
-
-### Useful resources
 
 ## Author
 

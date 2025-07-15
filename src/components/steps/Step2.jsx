@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import arcade from "../../images/icon-arcade.svg";
 import advanced from "../../images/icon-advanced.svg";
@@ -312,6 +313,9 @@ function Plans({
   nextStep,
   prevStep,
 }) {
+  const { register, setValue, watch } = useFormContext();
+  const selectedPlan = watch("plan", "arcade");
+
   return (
     <Wrapper>
       <StyledPlans>
@@ -327,7 +331,12 @@ function Plans({
 
           <PlanOption htmlFor="arcade">
             <RadioWrapper>
-              <RadioInput id="arcade" name="plan" defaultChecked />
+              <RadioInput
+                id="arcade"
+                value="arcade"
+                {...register("plan")}
+                checked={selectedPlan === "arcade"}
+              />
               <img src={arcade} />
 
               <TypeWrap>
@@ -343,7 +352,12 @@ function Plans({
 
           <PlanOption htmlFor="advanced">
             <RadioWrapper>
-              <RadioInput id="advanced" name="plan" />
+              <RadioInput
+                id="advanced"
+                value="advanced"
+                {...register("plan")}
+                checked={selectedPlan === "advanced"}
+              />
               <img src={advanced} />
 
               <TypeWrap>
@@ -359,7 +373,12 @@ function Plans({
 
           <PlanOption htmlFor="pro">
             <RadioWrapper>
-              <RadioInput id="pro" name="plan" />
+              <RadioInput
+                id="pro"
+                value="pro"
+                {...register("plan")}
+                checked={selectedPlan === "pro"}
+              />
               <img src={pro} />
 
               <TypeWrap>
@@ -386,16 +405,23 @@ function Plans({
               name="duration"
               id="monthly"
               value="monthly"
+              {...register("duration")}
               checked={billing === "monthly"}
-              onChange={handleBillingChange}
+              onChange={(e) => {
+                handleBillingChange(e);
+                setValue("duration", e.target.value);
+              }}
             />
 
             <PriceToggle>
               <CheckboxInput
                 checked={billing === "yearly"}
                 onChange={() => {
-                  setBilling(billing === "monthly" ? "yearly" : "monthly");
+                  const newBilling =
+                    billing === "monthly" ? "yearly" : "monthly";
+                  setBilling(newBilling);
                   setShowDiscount((prev) => !prev);
+                  setValue("duration", newBilling);
                 }}
                 aria-label="Pricing toggle"
               />
@@ -407,8 +433,12 @@ function Plans({
               name="duration"
               id="yearly"
               value="yearly"
+              {...register("duration")}
               checked={billing === "yearly"}
-              onChange={handleBillingChange}
+              onChange={(e) => {
+                handleBillingChange(e);
+                setValue("duration", e.target.value);
+              }}
             />
             <SwitcherLabel htmlFor="yearly" $active={billing === "yearly"}>
               Yearly

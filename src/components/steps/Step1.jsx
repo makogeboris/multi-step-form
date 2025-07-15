@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import Button from "../Button";
 
@@ -179,6 +180,17 @@ const BtnsWrapMobile = styled.div`
 `;
 
 function PersonalInfo({ nextStep }) {
+  const {
+    register,
+    trigger,
+    formState: { errors },
+  } = useFormContext();
+
+  const handleNext = async () => {
+    const valid = await trigger(["name", "email", "number"]);
+    if (valid) nextStep();
+  };
+
   return (
     <Wrapper>
       <StyledPersonalInfo>
@@ -193,46 +205,52 @@ function PersonalInfo({ nextStep }) {
           <FieldsContainer>
             <LabelErrWrap>
               <Label htmlFor="name">Name</Label>
-              {/* <ErrorMessage>This field is required</ErrorMessage> */}
+              {errors.name && (
+                <ErrorMessage>{errors.name.message}</ErrorMessage>
+              )}
             </LabelErrWrap>
             <Input
               type="text"
-              name="name"
               id="name"
               placeholder="e.g. Stephen King"
+              {...register("name")}
             />
           </FieldsContainer>
 
           <FieldsContainer>
             <LabelErrWrap>
               <Label htmlFor="email">Email Address</Label>
-              {/* <ErrorMessage>This field is required</ErrorMessage> */}
+              {errors.email && (
+                <ErrorMessage>{errors.email.message}</ErrorMessage>
+              )}
             </LabelErrWrap>
             <Input
               type="email"
-              name="email"
               id="email"
               placeholder="e.g. stephenking@lorem.com"
+              {...register("email")}
             />
           </FieldsContainer>
 
           <FieldsContainer>
             <LabelErrWrap>
               <Label htmlFor="number">Phone Number</Label>
-              {/* <ErrorMessage>This field is required</ErrorMessage> */}
+              {errors.number && (
+                <ErrorMessage>{errors.number.message}</ErrorMessage>
+              )}
             </LabelErrWrap>
             <Input
-              type="number"
-              name="number"
+              type="text"
               id="number"
               placeholder="e.g. +1 234 567 890"
+              {...register("number")}
             />
           </FieldsContainer>
         </FormFields>
 
         <BtnsWrapDesktop>
           <WrapDesk>
-            <Button onClick={nextStep} $variation="primary">
+            <Button onClick={handleNext} $variation="primary">
               Next Step
             </Button>
           </WrapDesk>
@@ -240,7 +258,7 @@ function PersonalInfo({ nextStep }) {
 
         <BtnsWrapMobile>
           <BtnWrap>
-            <Button onClick={nextStep} $variation="primary">
+            <Button onClick={handleNext} $variation="primary">
               Next Step
             </Button>
           </BtnWrap>

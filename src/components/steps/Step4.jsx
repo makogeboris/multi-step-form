@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import Button from "../Button";
 
@@ -206,7 +207,43 @@ const BtnsWrapMobile = styled.div`
   }
 `;
 
-function FinishingUp({ billing, nextStep, prevStep, handlePlanChange }) {
+function FinishingUp({ nextStep, prevStep, handlePlanChange }) {
+  const { getValues } = useFormContext();
+  const { plan, online, storage, customize, duration } = getValues();
+
+  const planPrices = {
+    arcade: duration === "monthly" ? 9 : 90,
+    advanced: duration === "monthly" ? 12 : 120,
+    pro: duration === "monthly" ? 15 : 150,
+  };
+
+  const addOns = [
+    {
+      name: "Online service",
+      selected: online,
+      amount: duration === "monthly" ? "+$1/mo" : "+$10/yr",
+      price: duration === "monthly" ? 1 : 10,
+    },
+    {
+      name: "Larger storage",
+      selected: storage,
+      amount: duration === "monthly" ? "+$2/mo" : "+$20/yr",
+      price: duration === "monthly" ? 2 : 20,
+    },
+    {
+      name: "Customizable Profile",
+      selected: customize,
+      amount: duration === "monthly" ? "+$2/mo" : "+$20/yr",
+      price: duration === "monthly" ? 2 : 20,
+    },
+  ];
+
+  const selectedAddOns = addOns.filter((addOn) => addOn.selected);
+
+  const total =
+    (planPrices[plan] || 0) +
+    selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0);
+
   return (
     <Wrapper>
       <StyledFinishingUp>
@@ -221,37 +258,36 @@ function FinishingUp({ billing, nextStep, prevStep, handlePlanChange }) {
           <Item>
             <PlanWrap>
               <Plan>
-                Arcade ({billing === "monthly" ? "Monthly" : "Yearly"})
+                {plan.charAt(0).toUpperCase() + plan.slice(1)} (
+                {duration === "monthly" ? "Monthly" : "Yearly"})
               </Plan>
               <ChangeBtn onClick={handlePlanChange}>Change</ChangeBtn>
             </PlanWrap>
-
-            <PlanTotal>{billing === "monthly" ? "$9/mo" : "$90/yr"}</PlanTotal>
+            <PlanTotal>
+              {duration === "monthly"
+                ? `$${planPrices[plan]}/mo`
+                : `$${planPrices[plan]}/yr`}
+            </PlanTotal>
           </Item>
 
           <Hr />
 
           <AddOnsWrap>
-            <Item>
-              <AddOnsText>Online service</AddOnsText>
-              <AddOnsAmt>
-                {billing === "monthly" ? "+$1/mo" : "+$10/yr"}
-              </AddOnsAmt>
-            </Item>
-
-            <Item>
-              <AddOnsText>Larger storage</AddOnsText>
-              <AddOnsAmt>
-                {billing === "monthly" ? "+$2/mo" : "+$20/yr"}
-              </AddOnsAmt>
-            </Item>
+            {selectedAddOns.map((addOn) => (
+              <Item key={addOn.name}>
+                <AddOnsText>{addOn.name}</AddOnsText>
+                <AddOnsAmt>{addOn.amount}</AddOnsAmt>
+              </Item>
+            ))}
           </AddOnsWrap>
         </FinishWrap>
 
         <TotalWrap>
-          <TotalText>Total (per month/year)</TotalText>
+          <TotalText>
+            Total (per {duration === "monthly" ? "month" : "year"})
+          </TotalText>
           <TotalAmount>
-            {billing === "monthly" ? "+$12/mo" : "+$120/yr"}
+            {duration === "monthly" ? `+$${total}/mo` : `+$${total}/yr`}
           </TotalAmount>
         </TotalWrap>
 
@@ -272,7 +308,6 @@ function FinishingUp({ billing, nextStep, prevStep, handlePlanChange }) {
             <Button onClick={prevStep} $variation="secondary">
               Go Back
             </Button>
-
             <Button onClick={nextStep} $variation="confirm">
               Confirm
             </Button>

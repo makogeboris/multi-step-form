@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import Button from "../Button";
 
@@ -195,6 +196,8 @@ const BtnsWrapMobile = styled.div`
 `;
 
 function AddOns({ billing, nextStep, prevStep }) {
+  const { register } = useFormContext();
+
   return (
     <Wrapper>
       <StyledAddOns>
@@ -208,7 +211,13 @@ function AddOns({ billing, nextStep, prevStep }) {
         <AddOnsWrap>
           <AddOn htmlFor="online">
             <BoxWrap>
-              {<CheckboxInput type="checkbox" name="online" id="online" />}
+              {
+                <CheckboxInput
+                  type="checkbox"
+                  id="online"
+                  {...register("online")}
+                />
+              }
               <Label>
                 Online service
                 <Span>Access to multiplayer games</Span>
@@ -222,7 +231,11 @@ function AddOns({ billing, nextStep, prevStep }) {
 
           <AddOn htmlFor="storage">
             <BoxWrap>
-              <CheckboxInput type="checkbox" name="storage" id="storage" />
+              <CheckboxInput
+                type="checkbox"
+                id="storage"
+                {...register("storage")}
+              />
               <Label>
                 Larger storage
                 <Span>Extra 1TB of cloud save</Span>
@@ -236,7 +249,11 @@ function AddOns({ billing, nextStep, prevStep }) {
 
           <AddOn htmlFor="customize">
             <BoxWrap>
-              <CheckboxInput type="checkbox" name="customize" id="customize" />
+              <CheckboxInput
+                type="checkbox"
+                id="customize"
+                {...register("customize")}
+              />
               <Label>
                 Customizable Profile
                 <Span>Custom theme on your profile</Span>
