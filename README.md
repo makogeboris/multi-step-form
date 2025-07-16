@@ -2,17 +2,11 @@
 
 ## Table of contents
 
-- [Overview](#overview)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
   - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
 - [Author](#author)
-
-## Overview
 
 ### The challenge
 
@@ -42,8 +36,6 @@ Users should be able to:
 - [Styled Components](https://styled-components.com/)
 - [React Hook Form](https://react-hook-form.com/)
 - [Yup](https://github.com/jquense/yup)
-
-### What I learned
 
 ## Author
 
